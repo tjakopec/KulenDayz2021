@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LJK</title>
+</head>
+<body>
+    <script>
+
+       function unos(poruka){
+           var regex = /^[A-Za-z]+$/;
+           while(true){
+               let ime=prompt(poruka);
+               if (ime.trim().length===0){
+                   prompt('Unos obavezan');
+               } else if (ime.match(regex)){
+                    return ime;
+               }else{
+                    prompt('Unos smije sadržavati samo slova');
+               }
+           }
+       }
+
+       function ucitajImena(){
+            while(true){
+                let ime1 = unos('Inesi svoje ime:');
+                let ime2 = unos('Unesi ime za provjeru:');
+                if (ime1!=ime2){
+                    return {'ime1': ime1, 'ime2': ime2};
+                }else{
+                    prompt('Imena moraju biti različita');
+                }
+            }
+       }
+
+       function sortiraj(imena){
+           var lista = [];
+           for (var i = 0; i < imena.ime1.length; i++) {
+               lista.push(imena.ime1.toLowerCase().charAt(i));
+           }
+           for (var i = 0; i < imena.ime2.length; i++) {
+               lista.push(imena.ime2.toLowerCase().charAt(i));
+           }
+           return lista.sort();
+       }
+
+       function prebroji(lista){
+            var mapa = new Map();
+            for (const kljuc of lista) {
+                mapa.set(kljuc,0);
+            }
+            for (const kljuc of lista) {
+                let ukupno = mapa.get(kljuc);
+                mapa.set(kljuc, ukupno + 1);
+            }
+            return Array.from(mapa.values());
+       }
+
+       function izracunajPostotak(brojevi){
+            let broj=parseInt(brojevi.join(''));
+            if(broj<100){
+                return broj;
+            }else{
+                var zbroj=[];
+                if (brojevi.length % 2 === 0){
+                    for(var i=0;i<brojevi.length;i++){
+                        var suma = brojevi[i] + brojevi[i+1];
+                        if(suma>=10){
+                            suma = suma % 10;
+                        }
+                        zbroj.push(suma);
+                    }
+                }else{
+                    for(var i=0;i<brojevi.length;i++){
+                        var suma = brojevi[i] + brojevi[i+1];
+                        if(suma>=10){
+                            suma = suma % 10;
+                        }
+                        zbroj.push(suma);
+                    }
+                    zbroj.push[brojevi[brojevi.length-1]];
+                }
+                return izracunajPostotak(zbroj);
+            }
+       }
+
+ 
+       function ljk(){
+            let rjecnikImena = ucitajImena();
+            let sortiranaLista = sortiraj(rjecnikImena);
+            let brojeviSlova=prebroji(sortiranaLista);
+            let postotak = izracunajPostotak(brojeviSlova);
+            document.write(rjecnikImena.ime1 + 
+                ' i ' + rjecnikImena.ime2 + 
+                ' se vole '  + postotak + ' %');
+       }
+
+       ljk();
+
+
+    </script>
+</body>
+</html>
